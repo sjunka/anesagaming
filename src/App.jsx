@@ -1,102 +1,45 @@
-import * as React from 'react';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Carousel from 'react-material-ui-carousel';
-import styled, { keyframes } from 'styled-components';
-import { gsap } from 'gsap';
+import React, { useRef, useState } from "react";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
 
-const ImageWrapper = styled(Box)`
-  position: relative;
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-  & img {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    animation: slide 1s forwards;
-  }
+import "./App.css";
 
-  @keyframes slide {
-    from {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-`;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const backgroundColors = ['#ffef96', '#ff9696', '#96baff'];
-
-const Background = styled(Box)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: ${({ colorindex }) => backgroundColors[colorindex]};
-  opacity: 0;
-  animation-name: ${fadeIn};
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-`;
+// import required modules
+import { EffectFade, Navigation, Pagination } from "swiper";
 
 export default function App() {
-
-  const [colorindex, setColorIndex] = React.useState(0);
-
-  const items = [ { src: 'https://placehold.co/600x400', index: 0 }, { src: 'https://placehold.co/600x400', index: 1 }, { src: 'https://placehold.co/600x400', index: 2 } ];
-
-  const handleSwipe = () => {
-    setColorIndex((prevIndex) => (prevIndex + 1) % backgroundColors.length);
-  };
-
-
-  React.useEffect(() => {
-    const backgroundElement = document.getElementById('background');
-    gsap.to(backgroundElement, {
-      backgroundColor: backgroundColors[colorindex],
-      duration: 1,
-      ease: 'power2.inOut',
-    });
-  }, [colorindex]);
-
-
   return (
+    <>
+      <Swiper
+        spaceBetween={30}
+        effect={"fade"}
+        navigation={true}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[EffectFade, Navigation]}
+        className="mySwiper"
+      >
+        <SwiperSlide className="swiper-slide-bg" style={{ backgroundImage: "url(https://swiperjs.com/demos/images/nature-1.jpg)" }}>
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide-bg" style={{ backgroundImage: "url(https://swiperjs.com/demos/images/nature-2.jpg)" }}>
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide-bg" style={{ backgroundImage: "url(https://swiperjs.com/demos/images/nature-3.jpg)" }}>
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide-bg" style={{ backgroundImage: "url(https://swiperjs.com/demos/images/nature-4.jpg)" }}>
+          <div style={{ backgroundColor: "rgba(0, 0, 0, 0.25)", color: 'white' }}>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor laoreet nisl, at hendrerit velit dignissim eu. In in ipsum lobortis, bibendum nibh eu, laoreet magna. Donec hendrerit sapien a lacinia commodo. Fusce maximus, leo non posuere euismod, tortor elit euismod elit, a ullamcorper metus nulla vel lorem. Ut vel placerat purus, ac vestibulum metus. Sed vel ornare ipsum. Aenean vel efficitur metus. Praesent
+            </p>
+          </div >
+        </SwiperSlide>
+      </Swiper>
 
-    <Container sx={{ height: '100vh', display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ mx: 'auto', textAlign: 'center' }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Material UI Vite.js example
-        </Typography>
-        <Carousel 
-        autoPlay ={false}
-          onChange={handleSwipe}
-          sx={{ height: '400px', width: '600px', mx: 'auto' }}
-        >
-          <img src="https://placehold.co/600x400" alt="Your image description" />
-          <img src="https://placehold.co/600x400" alt="Your image description" />
-          <img src="https://placehold.co/600x400" alt="Your image description" />
-        </Carousel>
-        <Background id='background' colorindex={colorindex} />
-
-      </Box>
-    </Container>
-
-
+    </>
   );
 }
