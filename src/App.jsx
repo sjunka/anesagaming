@@ -19,10 +19,14 @@ export default function App() {
       <Swiper
         spaceBetween={30}
         effect={"fade"}
-        navigation={true}
-        pagination={{
-          clickable: true,
+        fadeEffect= { {
+          crossFade: true
         }}
+        speed={1500}
+        // navigation={true}
+        // pagination={{
+        //   clickable: true,
+        // }}
         modules={[EffectFade, Navigation]}
         className="mySwiper"
       >
